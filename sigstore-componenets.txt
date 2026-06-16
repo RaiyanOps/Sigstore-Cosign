@@ -1,0 +1,43 @@
+
+Sigstore Components
+-------------------
+
+Main components:
+----------------
+
+* Cosign
+
+Signs container images.
+
+Example: " cosign sign my-registry/myapp:v1 "
+
+* Policy Controller / Admission Controller
+
+Validates images before pod deployment.
+
+
+Recommended Architecture for On-Prem Kubernetes
+-----------------------------------------------
+
+
+GitHub/GitLab/Jenkins --> Docker Build --> Private Registry (Harbor/Nexus/Jfrog/ECR-like) --> Cosign Sign (private key) -->
+
+--> Push Signature --> Kubernetes Admission Policy (Kyverno) --> Only signed image deploy 
+
+
+
+Recommended stack
+------------------
+
+* Kubernetes
+
+* Private Registry
+
+* Cosign
+
+* Kyverno OR Gatekeeper
+
+* Jenkins/GitLab CI
+
+
+I recommend: Kyverno because easier than OPA Gatekeeper.
