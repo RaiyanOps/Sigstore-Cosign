@@ -1,3 +1,5 @@
+Incase you have the images then you proceed with the below step to you onprem kubenetes cluster servers
+
 initially you need to load the images in the server where you need to deploy the kyverno policy admission controller
 
 incase your Kubernets cluster using containerd please use the below ctr commands to import the images:( i'll provide the export also)
