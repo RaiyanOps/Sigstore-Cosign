@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+  namespace: cosign
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      imagePullSecrets:
+      - name: gss-docker-registry
+      containers:
+      - image: gsstvl/cosign-nginx:226
+        name: cosign-nginx
+        resources: {}
+status: {}

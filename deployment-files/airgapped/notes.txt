@@ -1,0 +1,56 @@
+initially you need to load the images in the server where you need to deploy the kyverno policy admission controller
+
+incase your Kubernets cluster using containerd please use the below ctr commands to import the images:( i'll provide the export also)
+
+ctr -n=k8s.io images import redi-ch1-18-1.tar
+ctr -n=k8s.io images import kyv-cl1-18-1.tar
+ctr -n=k8s.io images import redi-ch-lat.tar
+ctr -n=k8s.io images import rep-con1-18-1.tar
+ctr -n=k8s.io images import clan-con1-18-1.tar
+ctr -n=k8s.io images import bg-con1-18-1.tar
+ctr -n=k8s.io images import kyverno1-18-1.tar
+ctr -n=k8s.io images import kyvpre1-18-1.tar
+
+for backup reference
+````````````````````
+ctr -n=k8s.io images export redi-ch1-18-1.tar ghcr.io/kyverno/readiness-checker:v1.18.1
+ctr -n=k8s.io images export kyv-cl1-18-1.tar reg.kyverno.io/kyverno/kyverno-cli:v1.18.1
+ctr -n=k8s.io images export redi-ch-lat.tar ghcr.io/kyverno/readiness-checker:latest
+ctr -n=k8s.io images export rep-con1-18-1.tar reg.kyverno.io/kyverno/reports-controller:v1.18.1
+ctr -n=k8s.io images export clan-con1-18-1.tar reg.kyverno.io/kyverno/cleanup-controller:v1.18.1
+ctr -n=k8s.io images export bg-con1-18-1.tar reg.kyverno.io/kyverno/background-controller:v1.18.1
+ctr -n=k8s.io images export kyverno1-18-1.tar reg.kyverno.io/kyverno/kyverno:v1.18.1
+ctr -n=k8s.io images export kyvpre1-18-1.tar reg.kyverno.io/kyverno/kyvernopre:v1.18.1
+
+
+incase your Kubernets cluster using docker please use the below docker commands to save and load the images
+
+docker load -i redi-ch1-18-1.tar
+docker load -i kyv-cl1-18-1.tar
+docker load -i redi-ch-lat.tar
+docker load -i rep-con1-18-1.tar
+docker load -i clan-con1-18-1.tar
+docker load -i bg-con1-18-1.tar
+docker load -i kyverno1-18-1.tar
+docker load -i kyvpre1-18-1.tar
+
+
+for backup reference
+````````````````````
+docker save ghcr.io/kyverno/readiness-checker:v1.18.1 -o redi-ch1-18-1.tar
+docker save reg.kyverno.io/kyverno/kyverno-cli:v1.18.1 -o kyv-cl1-18-1.tar
+docker save ghcr.io/kyverno/readiness-checker:latest -o redi-ch-lat.tar
+docker save reg.kyverno.io/kyverno/reports-controller:v1.18.1 -o rep-con1-18-1.tar
+docker save reg.kyverno.io/kyverno/cleanup-controller:v1.18.1 -o clan-con1-18-1.tar
+docker save reg.kyverno.io/kyverno/background-controller:v1.18.1 -o bg-con1-18-1.tar
+docker save reg.kyverno.io/kyverno/kyverno:v1.18.1 -o kyverno1-18-1.tar
+docker save reg.kyverno.io/kyverno/kyvernopre:v1.18.1 -o kyvpre1-18-1.tar
+
+
+
+after loading all the images please use the command for deploying the resources:
+
+kubectl apply -f kyvernoallinone.yml -n cosign
+kubectl apply -f policy.yml -n cosign
+
+then you can apply smaple deployment to check that or else you can implement this poc in you environment

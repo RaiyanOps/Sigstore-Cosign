@@ -1,0 +1,90 @@
+Save Existing Manifests First
+-----------------------------
+
+Before deleting, export everything you're using now:
+
+* mkdir backup
+
+Policy:
+
+* kubectl get clusterpolicy verify-image-signatures -o yaml > backup/verify-image-signatures.yaml
+
+Secret:
+
+* kubectl get secret cosign-pub-key -n cosign -o yaml > backup/cosign-pub-key.yaml
+
+Helm values:
+
+* helm get values kyverno -n cosign > backup/kyverno-values.yaml
+
+This gives you a clean rollback point before testing your air-gapped deployment.
+
+Start by showing me the output of:
+
+* helm list -A
+
+
+Remove Your Policies
+--------------------
+
+Check:
+
+* kubectl get cpol
+
+or
+
+* kubectl get clusterpolicy
+
+Delete:
+
+* kubectl delete clusterpolicy verify-image-signatures
+
+Remove Kyverno
+--------------
+
+If your release name is kyverno:
+
+* helm uninstall kyverno -n cosign
+
+Verify:
+
+* kubectl get pods -A
+
+Remove Kyverno CRDs
+-------------------
+
+Helm normally does not delete CRDs.
+
+Check:
+
+* kubectl get crd | grep kyverno
+
+You'll likely see several CRDs.
+
+Delete all Kyverno CRDs:
+
+* kubectl get crd | grep kyverno | awk '{print $1}' | xargs kubectl delete crd
+
+Verify:
+
+* kubectl get crd | grep kyverno
+
+No output should appear.
+
+
+Remove Public Key Secret
+------------------------
+
+kubectl delete secret cosign-pub -n cosign
+
+Remove Kyverno Namespace
+------------------------
+
+* kubectl delete namespace cosign
+
+Wait until:
+
+* kubectl get ns
+
+no longer shows:
+cosign

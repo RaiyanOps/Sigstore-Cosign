@@ -1,0 +1,32 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: verify-image-signatures
+spec:
+  validationFailureAction: Enforce
+  background: false
+  rules:
+  - name: check-image-signature
+    match:
+      any:
+      - resources:
+          kinds:
+          - Pod
+          namespaceSelector:
+            matchLabels:
+              cosign: gsscosign
+    verifyImages:
+    - imageReferences:
+      - "gsstvl/*"
+      - "busybox:latest"
+      attestors:
+      - entries:
+        - keys:
+            secret:
+              name: cosign-pub
+              namespace: cosign
+            # publicKeys: |-
+              # -----BEGIN PUBLIC KEY-----
+              # MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEtz8a0RuulPXpF9KWrWPdGH7UxdUu
+              # 8HvWvrbnpVxRcALuCtKI8TKHfq+jYvrYhUzBUYRoBCIx0Gv+X3FqMFeyYQ==
+              # -----END PUBLIC KEY-----

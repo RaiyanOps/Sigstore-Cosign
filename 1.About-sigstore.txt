@@ -1,0 +1,29 @@
+
+What is Sigstore & Cosign?
+--------------------------
+
+Cosign is a tool from the Sigstore ecosystem used to:
+
+* Sign container images
+* Verify image authenticity
+* Prevent tampered container deployments
+* Enforce supply chain security
+
+Without Cosign:
+--------------
+Developed code --> Docker Build --> Push Image --> Kubernetes Pulls Image --> pod
+
+Problem:
+--------
+Anyone can push a malicious image with same tag.
+
+Example:      sample/myapp01:v1
+---------
+It could be replaced.
+
+With Cosign:
+------------
+
+Developer --> Build image --> Sign image using private key --> Push signature to registry --> Kubernetes verifies signature --> Only trusted signed images run as pod
+
+This is a major DevSecOps practice.
