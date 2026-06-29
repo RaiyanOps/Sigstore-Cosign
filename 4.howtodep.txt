@@ -8,13 +8,13 @@ its has a file called : cosign.key ----> sign the image using private key
 sample generation output:
 -------------------------
 
-root@rs1-vm-deem-dev:~/cosign/new-setup# cosign generate-key-pair
+root@rs1-vm-dev:~/cosign/new-setup# cosign generate-key-pair
 Enter password for private key:
 Enter password for private key again:
 Private key written to cosign.key
 Public key written to cosign.pub
 
-root@rs1-vm-deem-dev:~/cosign/new-setup# ls
+root@rs1-vm-dev:~/cosign/new-setup# ls
 cosign.key  cosign.pub 
 
 
